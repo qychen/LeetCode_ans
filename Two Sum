@@ -1,0 +1,28 @@
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        orinums = list(nums)
+        nums.sort()
+        i = 0
+        for num in nums:
+            search = target-num
+            j = i+1
+            while j<len(nums):
+                #print num, search
+                if nums[j]==search:
+                    #print orinums
+                    index1 = orinums.index(num)+1
+                    index2 = len(orinums) - orinums[::-1].index(search)
+                    if index1 < index2:
+                        return index1, index2
+                    else:
+                        return index2, index1
+                elif nums[j]>search:
+                    break
+                else:
+                    j+=1
+            i+=1
