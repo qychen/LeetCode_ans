@@ -26,3 +26,21 @@ class Solution(object):
                 else:
                     j+=1
             i+=1
+            
+            
+# Hash map
+class Solution(object):
+    def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        
+        dic = {}
+        for i in range(len(nums)):
+            x = str(target - nums[i])
+            if x in dic:
+                return int(dic[x]), i+1
+            dic[str(nums[i])] = str(i+1)
+        
