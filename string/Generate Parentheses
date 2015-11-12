@@ -1,0 +1,44 @@
+class Solution(object):
+    def generateParenthesis(self, n):
+        """
+        :type n: int
+        :rtype: List[str]
+        """
+        
+        if n==0:
+            return []
+        if n == 1:
+            return ["()"]
+        res = []
+        res.append("()")
+        while n > 1:
+            new = []
+            for s in res:
+                if "()"+s not in new:
+                    new.append("()"+s)
+                if s+"()" not in new:
+                    new.append(s+"()")
+                ind1 = 0
+                while ind1<len(s)-1:
+                    ind2=ind1+1
+                    flag=1
+                    while ind2<len(s):
+                        if s[ind2]=="(":
+                            flag+=1
+                            ind2+=1
+                        else:
+                            ind2+=1
+                            flag-=1
+                            if flag==0 and s[:ind1]+"("+s[ind1:ind2]+")"+s[ind2:] not in new:
+                                new.append(s[:ind1]+"("+s[ind1:ind2]+")"+s[ind2:])
+                        
+                    ind1+=1
+                    while s[ind1]==")" and ind1<len(s)-1:
+                        ind1+=1
+            res=new
+            n-=1
+        return res
+
+                        
+                        
+                        
