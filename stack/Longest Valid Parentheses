@@ -1,0 +1,31 @@
+class Solution(object):
+    def longestValidParentheses(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
+        
+        if not s:
+            return 0
+        
+        stack = []
+        m = -1
+        res = 0
+        index = len(s)
+        for i in range(len(s)):
+            if s[i] == "(":
+                stack.append(i)
+            else:
+                if stack:
+                    index = stack.pop()
+                    if not stack:
+                        res = max(res, i-m)
+                    else:
+                        res = max(res, i-stack[-1])
+                else:
+                    if m != -1:
+                        res = max(res,i-m-1)
+                    m = i
+                print m, i,res
+        return res    
+// the stack in this case is to record the location of the left bracket which match the current right bracket. it’s little complicated to understand how to count the current length here, keep look again when reviewing!!!  
