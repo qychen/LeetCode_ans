@@ -1,0 +1,26 @@
+class Solution(object):
+    def countAndSay(self, n):
+        """
+        :type n: int
+        :rtype: str
+        """
+        s = "1"
+        res = ""
+        if n == 1:
+            return s
+        for i in range(n-1):
+            num = s[0]
+            res = ""
+            count = 0
+            for j in range(len(s)):
+                if s[j] == num:
+                    count += 1
+                else:
+                    res = res + str(count) + num
+                    num = s[j]
+                    count = 1
+            res = res + str(count) + num
+            s = res
+        return res
+                
+        
