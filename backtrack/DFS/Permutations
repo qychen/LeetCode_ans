@@ -1,0 +1,28 @@
+class Solution(object):
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        
+        if not nums:
+            return []
+        return self.dfs(nums, [], [])
+    
+    def dfs(self, nums, current, res):
+        if len(current) == len(nums)-1:
+            new = list(current)
+            for i in range(len(nums)):
+                if nums[i] not in new:
+                    new.append(nums[i])
+                    res.append(new)
+                    return res
+        else:
+            new = list(current)
+            for i in range(len(nums)):
+                if nums[i] not in new:
+                    new.append(nums[i])
+                    res = self.dfs(nums, new, res)
+                    new.pop()
+        return res
+        
