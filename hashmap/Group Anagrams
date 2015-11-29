@@ -1,0 +1,93 @@
+Solu1:
+class Solution(object):
+    
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        
+        class LinkedList:
+            def __init__(self, value=None, next=None):
+                self.value = value
+                self.next = next
+            
+        if not strs:
+            return []
+        
+        words = strs[:]
+        dic = {}
+        for i in range(len(words)):
+            word = "".join(sorted(words[i]))
+            if word in dic.keys():
+                current = dic[word]
+                flag = 0
+                while current.next:
+                    if strs[i]<= strs[current.next.value]:
+                        node = LinkedList(i, current.next)
+                        current.next = node
+                        flag = 1
+                        break
+                    else:
+                        current = current.next
+                if flag == 0:
+                    node = LinkedList(i, None)
+                    current.next = node
+            else:
+                node = LinkedList(i, None)
+                head = LinkedList(0, node)
+                dic[word] = head
+        
+        res = []
+        for ana in dic.keys():
+            head = dic[ana].next
+            l = []
+            while head:
+                l.append(strs[head.value])
+                head = head.next
+            res.append(l)
+        
+        '''
+        values = {}
+        for i in range(len(strs)):
+            word = []
+            for c in strs[i]:
+                word.append(c)
+            value = 0
+            index = 0
+            while word:
+                c = word.pop()
+                value += (ord(c)-97)*math.pow(26,index)
+                index += 1
+            values[i] = value
+        
+        res = []
+        for ana in dic.keys():
+            list = [strs[i] for i in sorted(dic[ana], key=lambda k: values[k])]
+            res.append(list)
+        '''    
+        
+        return res
+
+Solu2:
+class Solution(object):
+    def groupAnagrams(self, strs):
+        """
+        :type strs: List[str]
+        :rtype: List[List[str]]
+        """
+        mydict = dict()
+        results = []
+        for item in strs:
+            item_ele = tuple(sorted(item))
+            if not item_ele in mydict:
+                mydict[item_ele] = [item]
+            else:
+                mydict[item_ele].append(item)
+        for key in mydict:
+            item_array = mydict[key]
+            item_array.sort()
+            results.append(item_array)
+        return results
+        
+        
